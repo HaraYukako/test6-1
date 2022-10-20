@@ -15,48 +15,24 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 class JenkinsControllerTest {
+	/*このテストはJavaバージョン8で行っており、
+	    それに合わせてJREシステム・ライブラリー1.8に変更している*/
 
 	private MockMvc mockMvc;
 
-	@Autowired
-	JenkinsController target;
+	//JenkinsController target;
 
+	@Autowired
 	@Before
 	public void setup() {
-		mockMvc = MockMvcBuilders.standaloneSetup(target).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(new JenkinsController()).build();
 	}
 
 	@Test
 	public void indexTest() throws Exception {
 		mockMvc.perform(get("/"))
 				.andExpect(status().isOk())
-				.andExpect(view().name("index"))
+				.andExpect(view().name("/index.html"))
 				.andExpect(model().hasNoErrors());
 	}
-
-	/*
-	// テスト開始前に1回だけ実行される
-	@BeforeAll
-	static void beforeAll() {
-		System.out.println("JenkinsControllerTest 開始");
-	}
-	
-	// テスト開始後に1回だけ実行される
-	@AfterAll
-	static void afterAll() {
-		System.out.println("JenkinsControllerTest 終了");
-	}
-	
-	// 各テストメソッド開始前に実行される
-	@BeforeEach
-	void beforeEach() {
-		System.out.println("JenkinsControllerTest のテストメソッドをひとつ開始");
-	}
-	
-	// 各テストメソッド開始後に実行される
-	@AfterEach
-	void afterEach() {
-		System.out.println("JenkinsControllerTest のテストメソッドをひとつ終了");
-	}
-	*/
 }
